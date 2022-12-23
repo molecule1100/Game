@@ -3,12 +3,9 @@
 
 
 using namespace sf;
+using namespace mr;
+using namespace std;
 
-Car::Car()
-{
-    x = 0; y = 0;
-    speed = 2; angle = 0;
-}
 
 int main()
 {
@@ -20,18 +17,23 @@ int main()
 
     // задаем текстуры
     Texture t1, t2;
-    t1.loadFromFile("images/back.png");
-    t2.loadFromFile("images/car.png");
+    t1.loadFromFile("C:\\213\\images\\back.png");
+    t2.loadFromFile("C:\\213\\images\\car.png");
     t1.setSmooth(true);
     t2.setSmooth(true);
+
     Sprite spriteBackground(t1), spriteCar(t2);
     spriteBackground.scale(2, 2);
     spriteCar.setOrigin(-1, -1);
 
     // создаем машинку и ее характеристики
-    Car car;
+    Game car(0, 0, 0, 2);
 
-    float speed = 0, angle = 0;
+    float x = car.getX();
+    float y = car.getY();
+    float speed = car.getSpeed();
+    float angle = car.getAngle();
+
     float maxSpeed = 12.0;
     float accel = 0.2, decel = 0.3;
     float turnSpeed = 0.065;
@@ -106,30 +108,35 @@ int main()
             angle -= turnSpeed * speed / maxSpeed;
 
         // движение машинки
-        car.speed = speed;
-        car.angle = angle;
-        car.move();
+
+        car.setSpeed(speed);
+        car.setAngle(angle);
+
+        x += sin(angle) * speed;
+        y -= cos(angle) * speed;
 
         game.clear(Color::White);
         game.draw(spriteBackground);
 
         // бекграунд передивагается зависимо от положения машинки
-        if (car.x > 320)
-            offsetX = car.x - 320;
-        if (car.y > 240)
-            offsetY = car.y - 240;
+        if (x > 320)
+            offsetX = x - 320;
+        if (y > 240)
+            offsetY = y - 240;
 
         spriteBackground.setPosition(-offsetX, -offsetY);
         game.draw(spriteBackground);
-        spriteCar.setPosition(car.x - offsetX, car.y - offsetY);
+
+        spriteCar.setPosition(x - offsetX, y - offsetY);
 
         // перевод из радиан в градусы
-        spriteCar.setRotation(car.angle * 180 / 3.141593);
+        spriteCar.setRotation(angle * 180 / 3.141593);
         spriteCar.setColor(Color::Green);
         game.draw(spriteCar);
 
         game.display();
 
     }
+
     return 0;
 }

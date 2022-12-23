@@ -3,20 +3,35 @@
 
 using namespace sf;
 
-struct Car
+namespace mr
 {
-    float x, y, speed, angle;
-
-    Car()
+    float Game::getX()
     {
-        x = 0; y = 0;
-        speed = 2; angle = 0;
+        return m_x;
     }
 
-    void move()
+    float Game::getY()
     {
-        x += sin(angle) * speed;
-        y -= cos(angle) * speed;
+        return m_y;
     }
-};
 
+    float Game::getSpeed()
+    {
+        return m_speed;
+    }
+
+    float Game::getAngle()
+    {
+        return m_angle;
+    }
+
+    void Game::setSpeed(float speed)
+    {
+        m_speed = speed;
+    }
+
+    void Game::setAngle(float angle)
+    {
+        m_angle = angle;
+    }
+}
