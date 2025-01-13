@@ -23,7 +23,7 @@ add_executable("${PROJECT_NAME}" main.cpp
 					   images/back.png
 					   images/car.png
 					   src/game.cpp
-					   inc/game.cpp
+					   inc/game.hpp
 )
 											
 target_link_libraries("${PROJECT_NAME}" sfml-graphics-s-d
